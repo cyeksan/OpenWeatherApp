@@ -10,10 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.csappgenerator.weatherapp.R
 import com.csappgenerator.weatherapp.common.Constants
 
 @Composable
@@ -28,7 +30,10 @@ fun TopInfo(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-        Icon(imageVector = Icons.Default.Place, contentDescription = "")
+        Icon(
+            imageVector = Icons.Default.Place,
+            contentDescription = stringResource(R.string.place_icon)
+        )
         Text(text = location, style = MaterialTheme.typography.subtitle1)
     }
     Row(

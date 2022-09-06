@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.csappgenerator.weatherapp.R
@@ -43,21 +44,20 @@ fun BottomCard(
                     Icon(
                         painter = painterResource(id = R.drawable.wind),
                         modifier = Modifier.size(64.dp),
-                        contentDescription = ""
+                        contentDescription = stringResource(R.string.wind_icon)
                     )
                     Column(
                         modifier = Modifier
                             .padding(start = 8.dp)
                     ) {
                         Text(
-                            text = "Wind",
+                            text = stringResource(R.string.wind),
                             style = MaterialTheme.typography.subtitle2
                         )
                         Text(
                             text = wind,
                             fontSize = 12.sp
                         )
-
                     }
                     Column(
                         modifier = Modifier
@@ -70,19 +70,16 @@ fun BottomCard(
                                 painter = painterResource(
                                     id = R.drawable.ic_direction
                                 ),
-                                contentDescription = ""
+                                contentDescription = stringResource(R.string.direction_icon)
                             )
                             Text(
                                 modifier = Modifier.padding(start = 8.dp),
                                 text = direction, style = MaterialTheme.typography.subtitle2
                             )
                         }
-
-
                     }
                 }
             }
-
             Divider(
                 color = MaterialTheme.colors.dividerColor,
                 modifier = Modifier
@@ -101,7 +98,7 @@ fun BottomCard(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_pressure),
-                        contentDescription = ""
+                        contentDescription = stringResource(R.string.pressure_icon)
                     )
                     Column(
                         modifier = Modifier
@@ -110,18 +107,16 @@ fun BottomCard(
 
                     ) {
                         Text(
-                            text = "Press.",
+                            text = stringResource(R.string.pressure),
                             style = MaterialTheme.typography.subtitle2
                         )
                         Text(
                             text = pressure,
                             fontSize = 12.sp
                         )
-
                     }
                 }
             }
         }
-
     }
 }

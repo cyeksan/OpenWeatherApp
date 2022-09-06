@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.csappgenerator.weatherapp.R
@@ -40,7 +41,7 @@ fun TopCard(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_humidity),
-                        contentDescription = ""
+                        contentDescription = stringResource(R.string.humidity_icon)
                     )
                     Column(
                         modifier = Modifier
@@ -48,13 +49,13 @@ fun TopCard(
                             .padding(start = 8.dp)
                     ) {
                         Text(
-                            text = "Hum.", style = MaterialTheme.typography.subtitle2
+                            text = stringResource(R.string.humidity),
+                            style = MaterialTheme.typography.subtitle2
                         )
                         Text(
                             text = humidity,
                             fontSize = 12.sp
                         )
-
                     }
                 }
             }
@@ -76,7 +77,7 @@ fun TopCard(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_cloud),
-                        contentDescription = ""
+                        contentDescription = stringResource(R.string.cloud_icon)
                     )
                     Column(
                         modifier = Modifier
@@ -85,7 +86,8 @@ fun TopCard(
 
                     ) {
                         Text(
-                            text = "Clouds", style = MaterialTheme.typography.subtitle2
+                            text = stringResource(R.string.clouds),
+                            style = MaterialTheme.typography.subtitle2
                         )
                         Text(
                             text = clouds,
@@ -113,7 +115,7 @@ fun TopCard(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_visibility),
-                        contentDescription = ""
+                        contentDescription = stringResource(R.string.visibility_icon)
                     )
                     Column(
                         modifier = Modifier
@@ -122,7 +124,7 @@ fun TopCard(
 
                     ) {
                         Text(
-                            text = "Vis.",
+                            text = stringResource(R.string.visibility),
                             style = MaterialTheme.typography.subtitle2
                         )
                         Text(
