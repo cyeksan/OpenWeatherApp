@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="no_data_found">No data found!</string>
+    <string name="warning_icon">Warning icon</string>
+    <string-array name="cities">
+        <item name="stockholm">Stockholm</item>
+        <item name="gothenburg">Gothenburg</item>
+        <item name="london">London</item>
+        <item name="berlin">Berlin</item>
+        <item name="mountain_view">Mountain View</item>
+        <item name="new_york">New York</item>
+    </string-array>
+</resources>
