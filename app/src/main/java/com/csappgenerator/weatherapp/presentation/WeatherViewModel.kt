@@ -7,8 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.csappgenerator.weatherapp.common.Resource
 import com.csappgenerator.weatherapp.domain.use_cases.GetWeatherDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
