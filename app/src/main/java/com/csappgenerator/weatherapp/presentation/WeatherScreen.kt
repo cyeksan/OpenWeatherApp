@@ -18,11 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.csappgenerator.weatherapp.R
 import com.csappgenerator.weatherapp.common.*
-import com.csappgenerator.weatherapp.common.Constants.DEGREE
-import com.csappgenerator.weatherapp.common.Constants.DISTANCE_UNIT
-import com.csappgenerator.weatherapp.common.Constants.FLOW_UNIT
-import com.csappgenerator.weatherapp.common.Constants.PERCENTAGE
-import com.csappgenerator.weatherapp.common.Constants.PRESSURE_UNIT
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 
@@ -43,46 +38,43 @@ fun GetWeatherScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            when (state) {
-                is Resource.Loading -> {
+            state.let { weatherState ->
+                if (weatherState.isLoading) {
                     CircularProgressIndicator()
                 }
-                is Resource.Success -> {
-                    val weatherList = state.data
-                    weatherList?.size?.let { itemNumber ->
-                        HorizontalPager(
-                            count = itemNumber,
-                            contentPadding = PaddingValues(start = 0.dp),
-                        ) { item ->
-                            val weatherItem = state.data[item]
-                            weatherItem.weather?.get(0)?.let { weatherDetail ->
-                                WeatherContent(
-                                    location = weatherItem.name.toString(),
-                                    temperature = "${weatherItem.main?.temp?.toCelsius()}$DEGREE",
-                                    icon = weatherDetail.icon,
-                                    description = weatherDetail.description,
-                                    humidity = "${weatherItem.main?.humidity.toString()}$PERCENTAGE",
-                                    clouds = "${weatherItem.clouds?.all?.toString() ?: 0}$PERCENTAGE",
-                                    visibility = "${weatherItem.visibility?.toKilometer()} $DISTANCE_UNIT",
-                                    wind = "${weatherItem.wind?.speed.toKilometerPerHour()} $FLOW_UNIT",
-                                    direction = "${weatherItem.wind?.deg.toDirection()}",
-                                    pressure = "${weatherItem.main?.pressure} $PRESSURE_UNIT",
-                                )
-                            }
-                        }
-                    }
-                }
 
-                is Resource.Error -> {
+                if (weatherState.error.isNotEmpty()) {
                     Icon(
                         imageVector = Icons.Default.Warning,
                         modifier = Modifier.size(64.dp),
                         contentDescription = stringResource(R.string.warning_icon)
                     )
                     Text(stringResource(R.string.no_data_found))
-                    Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, weatherState.error, Toast.LENGTH_LONG).show()
+                }
+                HorizontalPager(
+                    count = weatherState.weatherList.size,
+                    contentPadding = PaddingValues(start = 0.dp),
+                ) { item ->
+                    val weatherItem = state.weatherList[item]
+                    weatherItem.weather?.get(0)?.let { weatherDetail ->
+                        WeatherContent(
+                            location = weatherItem.name.toString(),
+                            temperature = "${weatherItem.main?.temp?.toCelsius()}${Constants.DEGREE}",
+                            icon = weatherDetail.icon,
+                            description = weatherDetail.description,
+                            humidity = "${weatherItem.main?.humidity.toString()}${Constants.PERCENTAGE}",
+                            clouds = "${weatherItem.clouds?.all?.toString() ?: 0}${Constants.PERCENTAGE}",
+                            visibility = "${weatherItem.visibility?.toKilometer()} ${Constants.DISTANCE_UNIT}",
+                            wind = "${weatherItem.wind?.speed.toKilometerPerHour()} ${Constants.FLOW_UNIT}",
+                            direction = "${weatherItem.wind?.deg.toDirection()}",
+                            pressure = "${weatherItem.main?.pressure} ${Constants.PRESSURE_UNIT}",
+                        )
+                    }
                 }
             }
+
         }
     }
 }
+
