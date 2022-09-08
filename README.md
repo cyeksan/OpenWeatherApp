@@ -1,6 +1,10 @@
 # OpenWeatherApp
 
-https://user-images.githubusercontent.com/34041050/188731181-8c14ef1f-4d55-4e71-a028-269844e2c6e9.mp4
+
+
+https://user-images.githubusercontent.com/34041050/189243143-7c7652dc-9227-4c07-807d-41162fa61c52.mp4
+
+
 
 * Jetpack Compose
 
@@ -8,9 +12,15 @@ https://user-images.githubusercontent.com/34041050/188731181-8c14ef1f-4d55-4e71-
 
 * Retrofit
 
+* Room Db
+
+* Caching
+
 * Dagger-Hilt
 
 * Coroutines
+
+* Flow
 
 * Horizontal Pager
 
