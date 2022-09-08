@@ -1,6 +1,9 @@
 package com.csappgenerator.weatherapp.di
 
+import android.app.Application
+import androidx.room.Room
 import com.csappgenerator.weatherapp.common.Constants
+import com.csappgenerator.weatherapp.data.local.WeatherDatabase
 import com.csappgenerator.weatherapp.data.remote.WeatherApi
 import com.csappgenerator.weatherapp.data.repository.WeatherRepositoryImpl
 import com.csappgenerator.weatherapp.domain.repository.WeatherRepository
@@ -14,13 +17,23 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-
 object AppModule {
+    @Provides
+    @Singleton
+    fun provideWeatherDatabase(application: Application): WeatherDatabase {
+        return Room.databaseBuilder(
+            application,
+            WeatherDatabase::class.java,
+            WeatherDatabase.DATABASE_NAME
+        )
+            .build()
+    }
+
     @Provides
     @Singleton
     fun provideWeatherApi(): WeatherApi {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(WeatherApi.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(WeatherApi::class.java)
@@ -28,7 +41,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRepository(api: WeatherApi): WeatherRepository {
-        return WeatherRepositoryImpl(api)
+    fun provideRepository(api: WeatherApi, db: WeatherDatabase): WeatherRepository {
+        return WeatherRepositoryImpl(api, db.weatherDao)
     }
 }

@@ -11,4 +11,8 @@ interface WeatherApi {
         @Query("q") cityName: String,
         @Query("appid") appId: String = Constants.API_KEY,
     ): WeatherDto
+
+    companion object {
+        const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
+    }
 }

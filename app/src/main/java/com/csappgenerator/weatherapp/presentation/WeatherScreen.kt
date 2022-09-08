@@ -49,28 +49,27 @@ fun GetWeatherScreen(
                         modifier = Modifier.size(64.dp),
                         contentDescription = stringResource(R.string.warning_icon)
                     )
-                    Text(stringResource(R.string.no_data_found))
-                    Toast.makeText(context, weatherState.error, Toast.LENGTH_LONG).show()
+                    Text(weatherState.error)
+                    Toast.makeText(context, R.string.no_data_found, Toast.LENGTH_LONG).show()
                 }
                 HorizontalPager(
                     count = weatherState.weatherList.size,
                     contentPadding = PaddingValues(start = 0.dp),
                 ) { item ->
                     val weatherItem = state.weatherList[item]
-                    weatherItem.weather?.get(0)?.let { weatherDetail ->
-                        WeatherContent(
-                            location = weatherItem.name.toString(),
-                            temperature = "${weatherItem.main?.temp?.toCelsius()}${Constants.DEGREE}",
-                            icon = weatherDetail.icon,
-                            description = weatherDetail.description,
-                            humidity = "${weatherItem.main?.humidity.toString()}${Constants.PERCENTAGE}",
-                            clouds = "${weatherItem.clouds?.all?.toString() ?: 0}${Constants.PERCENTAGE}",
-                            visibility = "${weatherItem.visibility?.toKilometer()} ${Constants.DISTANCE_UNIT}",
-                            wind = "${weatherItem.wind?.speed.toKilometerPerHour()} ${Constants.FLOW_UNIT}",
-                            direction = "${weatherItem.wind?.deg.toDirection()}",
-                            pressure = "${weatherItem.main?.pressure} ${Constants.PRESSURE_UNIT}",
-                        )
-                    }
+                    WeatherContent(
+                        location = weatherItem.name.toString(),
+                        temperature = "${weatherItem.temp?.toCelsius()}${Constants.DEGREE}",
+                        icon = weatherItem.icon,
+                        description = weatherItem.description!!,
+                        humidity = "${weatherItem.humidity.toString()}${Constants.PERCENTAGE}",
+                        clouds = "${weatherItem.all?.toString() ?: 0}${Constants.PERCENTAGE}",
+                        visibility = "${weatherItem.visibility?.toKilometer()} ${Constants.DISTANCE_UNIT}",
+                        wind = "${weatherItem.speed.toKilometerPerHour()} ${Constants.FLOW_UNIT}",
+                        direction = "${weatherItem.deg.toDirection()}",
+                        pressure = "${weatherItem.pressure} ${Constants.PRESSURE_UNIT}",
+                    )
+
                 }
             }
 

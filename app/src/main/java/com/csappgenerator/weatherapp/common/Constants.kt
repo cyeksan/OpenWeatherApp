@@ -2,7 +2,6 @@ package com.csappgenerator.weatherapp.common
 
 object Constants {
 
-    const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
     const val IMAGE_BASE_URL = "http://openweathermap.org/img/wn/"
     const val IMAGE_SUFFIX = "@2x.png"
     const val API_KEY = "b63def9d6ca05b2808b93be36b2ee119"

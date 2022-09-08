@@ -8,7 +8,7 @@ https://user-images.githubusercontent.com/34041050/188731181-8c14ef1f-4d55-4e71-
 
 * Retrofit
 
-* Dagger-Hilt 
+* Dagger-Hilt
 
 * Coroutines
 
