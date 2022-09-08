@@ -11,7 +11,7 @@ data class WeatherEntity(
     val description: String?,
     val name: String?,
     val humidity: Int?,
-    val icon: String,
+    val icon: String?,
     val temp: Double?,
     val all: Int?,
     val visibility: Int?,
@@ -21,17 +21,17 @@ data class WeatherEntity(
 ) {
     fun toWeather(): Weather {
         return Weather(
-            id,
-            name,
-            description,
-            humidity,
-            icon,
-            temp,
-            all,
-            visibility,
-            speed,
-            deg,
-            pressure
+            id = id,
+            name = name,
+            description = description,
+            humidity = humidity,
+            icon = icon,
+            temp = temp,
+            all = all,
+            visibility = visibility,
+            speed = speed,
+            deg = deg,
+            pressure = pressure
         )
     }
 }

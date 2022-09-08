@@ -2,7 +2,6 @@ package com.csappgenerator.weatherapp.di
 
 import android.app.Application
 import androidx.room.Room
-import com.csappgenerator.weatherapp.common.Constants
 import com.csappgenerator.weatherapp.data.local.WeatherDatabase
 import com.csappgenerator.weatherapp.data.remote.WeatherApi
 import com.csappgenerator.weatherapp.data.repository.WeatherRepositoryImpl
@@ -26,6 +25,7 @@ object AppModule {
             WeatherDatabase::class.java,
             WeatherDatabase.DATABASE_NAME
         )
+            .fallbackToDestructiveMigration()
             .build()
     }
 

@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.csappgenerator.weatherapp.R
 import com.csappgenerator.weatherapp.common.Constants
@@ -48,6 +49,7 @@ fun TopInfo(
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(Constants.IMAGE_BASE_URL + icon + Constants.IMAGE_SUFFIX)
+                .diskCachePolicy(CachePolicy.ENABLED)
                 .build(),
             modifier = Modifier
                 .size(80.dp),

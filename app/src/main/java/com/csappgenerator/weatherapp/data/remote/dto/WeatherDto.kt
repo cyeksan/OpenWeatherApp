@@ -17,7 +17,7 @@ fun WeatherDto.toWeather(): Weather {
         id = id,
         name = name,
         description = weather[0].description,
-        icon = weather[0].description,
+        icon = weather[0].icon,
         humidity = main.humidity,
         temp = main.temp,
         all = clouds.all,

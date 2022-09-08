@@ -8,7 +8,7 @@ data class Weather(
     val name: String?,
     val description: String?,
     val humidity: Int?,
-    val icon: String,
+    val icon: String?,
     val temp: Double?,
     val all: Int?,
     val visibility: Int?,

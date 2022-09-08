@@ -60,7 +60,7 @@ fun GetWeatherScreen(
                     WeatherContent(
                         location = weatherItem.name.toString(),
                         temperature = "${weatherItem.temp?.toCelsius()}${Constants.DEGREE}",
-                        icon = weatherItem.icon,
+                        icon = weatherItem.icon!!,
                         description = weatherItem.description!!,
                         humidity = "${weatherItem.humidity.toString()}${Constants.PERCENTAGE}",
                         clouds = "${weatherItem.all?.toString() ?: 0}${Constants.PERCENTAGE}",
@@ -72,7 +72,6 @@ fun GetWeatherScreen(
 
                 }
             }
-
         }
     }
 }

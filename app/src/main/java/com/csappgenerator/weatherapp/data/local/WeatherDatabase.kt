@@ -6,7 +6,7 @@ import com.csappgenerator.weatherapp.data.local.entity.WeatherEntity
 
 @Database(
     entities = [WeatherEntity::class],
-    version = 1,
+    version = 2,
 )
 abstract class WeatherDatabase : RoomDatabase() {
     abstract val weatherDao: WeatherDao
