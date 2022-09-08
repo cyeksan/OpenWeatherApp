@@ -41,7 +41,6 @@ class WeatherViewModel @Inject constructor(
                     }
                 }
             }
-            .flowOn(Dispatchers.Main)
             .launchIn(viewModelScope)
     }
 }
