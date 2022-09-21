@@ -2,7 +2,10 @@ package com.csappgenerator.weatherapp.presentation
 
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
@@ -25,54 +28,54 @@ import com.google.accompanist.pager.HorizontalPager
 @Composable
 fun GetWeatherScreen(
     viewModel: WeatherViewModel = hiltViewModel()
-
 ) {
     val state = viewModel.state.value
     val context = LocalContext.current
 
     Scaffold(
-        topBar = {}
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            state.let { weatherState ->
-                if (weatherState.isLoading) {
-                    CircularProgressIndicator()
-                }
+        topBar = {},
+        content = {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                state.let { weatherState ->
+                    if (weatherState.isLoading) {
+                        CircularProgressIndicator()
+                    }
 
-                if (weatherState.error.isNotEmpty()) {
-                    Icon(
-                        imageVector = Icons.Default.Warning,
-                        modifier = Modifier.size(64.dp),
-                        contentDescription = stringResource(R.string.warning_icon)
-                    )
-                    Text(weatherState.error)
-                    Toast.makeText(context, R.string.no_data_found, Toast.LENGTH_LONG).show()
-                }
-                HorizontalPager(
-                    count = weatherState.weatherList.size,
-                    contentPadding = PaddingValues(start = 0.dp),
-                ) { item ->
-                    val weatherItem = state.weatherList[item]
-                    WeatherContent(
-                        location = weatherItem.name.toString(),
-                        temperature = "${weatherItem.temp?.toCelsius()}${Constants.DEGREE}",
-                        icon = weatherItem.icon!!,
-                        description = weatherItem.description!!,
-                        humidity = "${weatherItem.humidity.toString()}${Constants.PERCENTAGE}",
-                        clouds = "${weatherItem.all?.toString() ?: 0}${Constants.PERCENTAGE}",
-                        visibility = "${weatherItem.visibility?.toKilometer()} ${Constants.DISTANCE_UNIT}",
-                        wind = "${weatherItem.speed.toKilometerPerHour()} ${Constants.FLOW_UNIT}",
-                        direction = "${weatherItem.deg.toDirection()}",
-                        pressure = "${weatherItem.pressure} ${Constants.PRESSURE_UNIT}",
-                    )
+                    if (weatherState.error.isNotEmpty()) {
+                        Icon(
+                            imageVector = Icons.Default.Warning,
+                            modifier = Modifier.size(64.dp),
+                            contentDescription = stringResource(R.string.warning_icon)
+                        )
+                        Text(weatherState.error)
+                        Toast.makeText(context, R.string.no_data_found, Toast.LENGTH_LONG).show()
+                    }
+                    HorizontalPager(
+                        count = weatherState.weatherList.size,
+                        contentPadding = it,
+                    ) { item ->
+                        val weatherItem = state.weatherList[item]
+                        WeatherContent(
+                            location = weatherItem.name.toString(),
+                            temperature = "${weatherItem.temp?.toCelsius()}${Constants.DEGREE}",
+                            icon = weatherItem.icon!!,
+                            description = weatherItem.description!!,
+                            humidity = "${weatherItem.humidity.toString()}${Constants.PERCENTAGE}",
+                            clouds = "${weatherItem.all?.toString() ?: 0}${Constants.PERCENTAGE}",
+                            visibility = "${weatherItem.visibility?.toKilometer()} ${Constants.DISTANCE_UNIT}",
+                            wind = "${weatherItem.speed.toKilometerPerHour()} ${Constants.FLOW_UNIT}",
+                            direction = "${weatherItem.deg.toDirection()}",
+                            pressure = "${weatherItem.pressure} ${Constants.PRESSURE_UNIT}",
+                        )
 
+                    }
                 }
             }
         }
-    }
+    )
 }
 

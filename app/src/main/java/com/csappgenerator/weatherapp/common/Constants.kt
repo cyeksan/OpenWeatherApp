@@ -4,7 +4,7 @@ object Constants {
 
     const val IMAGE_BASE_URL = "http://openweathermap.org/img/wn/"
     const val IMAGE_SUFFIX = "@2x.png"
-    const val API_KEY = "b63def9d6ca05b2808b93be36b2ee119"
+    const val WEATHER_API_CONSTANT = 1
 
     const val ABSOLUTE_TEMP = -273.15
     const val KM_CONVERSION_COEFFICIENT = 1000
