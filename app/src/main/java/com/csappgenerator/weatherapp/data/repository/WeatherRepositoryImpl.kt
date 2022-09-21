@@ -2,8 +2,8 @@ package com.csappgenerator.weatherapp.data.repository
 
 import com.csappgenerator.weatherapp.common.City
 import com.csappgenerator.weatherapp.common.CityKeys
+import com.csappgenerator.weatherapp.common.Exceptions
 import com.csappgenerator.weatherapp.data.local.WeatherDao
-import com.csappgenerator.weatherapp.data.local.entity.WeatherEntity
 import com.csappgenerator.weatherapp.data.remote.WeatherApi
 import com.csappgenerator.weatherapp.data.remote.dto.toWeather
 import com.csappgenerator.weatherapp.domain.model.Weather
@@ -20,6 +20,27 @@ class WeatherRepositoryImpl @Inject constructor(
     private val cities = City.getCities()
 
     override suspend fun getWeatherData(): List<Weather> {
+        val remoteList = getRemoteWeatherListAsync(api, cities)
+        if (remoteList.isNotEmpty()) {
+            clearDbAndInsertAllToDb(dao, remoteList)
+        }
+        val weatherListFromDb = dao.getWeatherDataFromDb().map {
+            it.toWeather()
+        }
+        return weatherListFromDb
+    }
+
+    private suspend fun clearDbAndInsertAllToDb(dao: WeatherDao, remoteList: List<Weather>) {
+        dao.deleteAll()
+        dao.insertAll(remoteList.map {
+            it.toWeatherEntity()
+        })
+    }
+
+    private suspend fun getRemoteWeatherListAsync(
+        api: WeatherApi,
+        cities: Map<String, String>
+    ): List<Weather> {
         val mutableWeatherList = mutableListOf<Weather>()
         supervisorScope {
             val deferredGothenburg = async {
@@ -63,17 +84,5 @@ class WeatherRepositoryImpl @Inject constructor(
             }
         }
         return mutableWeatherList
-    }
-
-    override suspend fun getWeatherDataFromDb(): List<WeatherEntity> {
-        return dao.getWeatherDataFromDb()
-    }
-
-    override suspend fun insertAll(weatherList: List<WeatherEntity>) {
-        dao.insertAll(weatherList)
-    }
-
-    override suspend fun deleteAll() {
-        dao.deleteAll()
     }
 }
