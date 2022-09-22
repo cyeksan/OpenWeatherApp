@@ -5,7 +5,7 @@ import com.csappgenerator.weatherapp.common.City
 import com.csappgenerator.weatherapp.common.Resource
 import com.csappgenerator.weatherapp.data.repository.FakeWeatherRepository
 import com.csappgenerator.weatherapp.domain.use_cases.GetWeatherDataUseCase
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -26,7 +26,7 @@ class GetWeatherDataTest {
     }
 
     @Test
-    fun `check all names are correct`() = runTest {
+    fun `check if all city names are correct`() = runTest {
         getWeatherDataUseCase().collect { result ->
             if (result is Resource.Success) {
                 result.data?.forEach {

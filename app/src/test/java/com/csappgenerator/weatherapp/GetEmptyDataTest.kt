@@ -4,7 +4,7 @@ import com.csappgenerator.weatherapp.common.City
 import com.csappgenerator.weatherapp.common.Resource
 import com.csappgenerator.weatherapp.data.repository.FakeEmptyDataRepository
 import com.csappgenerator.weatherapp.domain.use_cases.GetWeatherDataUseCase
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -25,7 +25,7 @@ class GetEmptyDataTest {
     }
 
     @Test
-    fun `check error message is correct`() = runTest {
+    fun `check if error message in case of empty list is correct`() = runTest {
         getWeatherDataUseCase().collect { result ->
             if (result is Resource.Error) {
                 assertEquals("No data found!", result.message)
