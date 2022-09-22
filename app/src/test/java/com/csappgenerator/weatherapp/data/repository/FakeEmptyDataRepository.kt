@@ -6,6 +6,6 @@ import com.csappgenerator.weatherapp.domain.repository.WeatherRepository
 
 class FakeEmptyDataRepository : WeatherRepository {
     override suspend fun getWeatherData(): List<Weather> {
-       return emptyList()
+        return emptyList()
     }
 }

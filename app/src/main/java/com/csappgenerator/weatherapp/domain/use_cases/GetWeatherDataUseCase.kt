@@ -7,7 +7,6 @@ import com.csappgenerator.weatherapp.domain.model.Weather
 import com.csappgenerator.weatherapp.domain.repository.WeatherRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.lang.Exception
 import javax.inject.Inject
 
 class GetWeatherDataUseCase @Inject constructor(private val repository: WeatherRepository) {

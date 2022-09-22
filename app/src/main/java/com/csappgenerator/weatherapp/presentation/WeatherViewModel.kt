@@ -15,9 +15,8 @@ import javax.inject.Inject
 class WeatherViewModel @Inject constructor(
     private val getWeatherDataUseCase: GetWeatherDataUseCase
 ) : ViewModel() {
-    private val _state = mutableStateOf(WeatherState())
+    private val _state = mutableStateOf<WeatherState>(WeatherState.Loading)
     val state: State<WeatherState> = _state
-
 
     init {
         getCurrentWeatherData()
@@ -29,13 +28,13 @@ class WeatherViewModel @Inject constructor(
             .onEach { result ->
                 when (result) {
                     is Resource.Loading -> {
-                        _state.value = WeatherState(isLoading = true)
+                        _state.value = WeatherState.Loading
                     }
                     is Resource.Success -> {
-                        _state.value = WeatherState(weatherList = result.data!!)
+                        _state.value = WeatherState.Success(weatherList = result.data!!)
                     }
                     is Resource.Error -> {
-                        _state.value = WeatherState(error = result.message!!)
+                        _state.value = WeatherState.Error(message = result.message!!)
                     }
                 }
             }

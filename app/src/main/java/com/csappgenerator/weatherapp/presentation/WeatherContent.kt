@@ -15,6 +15,7 @@ import com.csappgenerator.weatherapp.presentation.composable.TopInfo
 
 @Composable
 fun WeatherContent(
+    modifier: Modifier,
     location: String,
     temperature: String,
     icon: String,
@@ -27,9 +28,8 @@ fun WeatherContent(
     pressure: String
 ) {
     Column(
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp), verticalArrangement = Arrangement.Center
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center
     ) {
 
         TopInfo(
@@ -56,6 +56,9 @@ fun WeatherContent(
 @Composable
 fun WeatherContentPreview() {
     WeatherContent(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         location = "London",
         temperature = "25°",
         icon = "10d",

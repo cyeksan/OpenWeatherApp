@@ -4,9 +4,9 @@ import com.csappgenerator.weatherapp.common.City
 import com.csappgenerator.weatherapp.common.Resource
 import com.csappgenerator.weatherapp.data.repository.FakeEmptyDataRepository
 import com.csappgenerator.weatherapp.domain.use_cases.GetWeatherDataUseCase
-import org.junit.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 

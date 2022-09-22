@@ -2,7 +2,6 @@ package com.csappgenerator.weatherapp.data.repository
 
 import com.csappgenerator.weatherapp.common.City
 import com.csappgenerator.weatherapp.common.CityKeys
-import com.csappgenerator.weatherapp.common.Exceptions
 import com.csappgenerator.weatherapp.data.local.WeatherDao
 import com.csappgenerator.weatherapp.data.remote.WeatherApi
 import com.csappgenerator.weatherapp.data.remote.dto.toWeather
