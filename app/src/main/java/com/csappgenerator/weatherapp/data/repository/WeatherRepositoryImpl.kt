@@ -18,8 +18,28 @@ class WeatherRepositoryImpl @Inject constructor(
     private val dao: WeatherDao
 ) : WeatherRepository {
     private val cities = City.getCities()
-
     override suspend fun getWeatherData(): List<Weather> {
+        val remoteList = getRemoteWeatherListAsync(api, cities)
+        if (remoteList.isNotEmpty()) {
+            clearDbAndInsertAllToDb(dao, remoteList)
+        }
+        val weatherListFromDb = dao.getWeatherDataFromDb().map {
+            it.toWeather()
+        }
+        return weatherListFromDb
+    }
+
+    private suspend fun clearDbAndInsertAllToDb(dao: WeatherDao, remoteList: List<Weather>) {
+        dao.deleteAll()
+        dao.insertAll(remoteList.map {
+            it.toWeatherEntity()
+        })
+    }
+
+    private suspend fun getRemoteWeatherListAsync(
+        api: WeatherApi,
+        cities: Map<String, String>
+    ): List<Weather> {
         var deferredList = emptyList<Weather>()
         supervisorScope {
             val deferredGothenburg = async {
@@ -40,7 +60,6 @@ class WeatherRepositoryImpl @Inject constructor(
             val deferredBerlin = async {
                 api.getWeatherData(cityName = cities[CityKeys.BERLIN.name]!!).toWeather()
             }
-
             deferredList = listOf(
                 deferredGothenburg,
                 deferredStockholm,
@@ -58,17 +77,5 @@ class WeatherRepositoryImpl @Inject constructor(
             }
         }
         return deferredList
-    }
-
-    override suspend fun getWeatherDataFromDb(): List<WeatherEntity> {
-        return dao.getWeatherDataFromDb()
-    }
-
-    override suspend fun insertAll(weatherList: List<WeatherEntity>) {
-        dao.insertAll(weatherList)
-    }
-
-    override suspend fun deleteAll() {
-        dao.deleteAll()
     }
 }
