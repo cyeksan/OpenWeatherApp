@@ -1,6 +1,7 @@
 package com.csappgenerator.weatherapp.domain.use_cases
 
 
+import com.csappgenerator.weatherapp.common.Exceptions
 import com.csappgenerator.weatherapp.common.Resource
 import com.csappgenerator.weatherapp.domain.model.Weather
 import com.csappgenerator.weatherapp.domain.repository.WeatherRepository
@@ -12,21 +13,15 @@ class GetWeatherDataUseCase @Inject constructor(private val repository: WeatherR
 
     operator fun invoke(): Flow<Resource<List<Weather>>> = flow {
         emit(Resource.Loading())
-        val remoteList = repository.getWeatherData()
-        if (remoteList.isNotEmpty()) {
-            repository.deleteAll()
-            repository.insertAll(remoteList.map {
-                it.toWeatherEntity()
-            })
+        try {
+            val weatherList = repository.getWeatherData()
+            if (weatherList.isEmpty()) {
+                throw Exceptions.NoDataFoundException("No data found!")
+            }
+            emit(Resource.Success(weatherList))
+        } catch (e: Exception) {
+            emit(Resource.Error(e.message!!))
         }
-        val weatherListFromDb = repository.getWeatherDataFromDb().map {
-            it.toWeather()
-        }
-        if (weatherListFromDb.isEmpty()) {
-            emit(Resource.Error(message = "No data found!"))
-            return@flow
-        }
-        emit(Resource.Success(weatherListFromDb))
     }
 }
 

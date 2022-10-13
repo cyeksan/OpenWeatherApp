@@ -1,10 +1,10 @@
 package com.csappgenerator.weatherapp.common
 
 enum class CityKeys(name: String) {
-    GOTHENBURG("gothenburg"),
-    STOCKHOLM("stockholm"),
-    MOUNTAIN_VIEW("mountain_view"),
-    LONDON("london"),
-    NEW_YORK("new_york"),
-    BERLIN("berlin")
+    GOTHENBURG("Gothenburg"),
+    STOCKHOLM("Stockholm"),
+    MOUNTAIN_VIEW("Mountain View"),
+    LONDON("London"),
+    NEW_YORK("New York"),
+    BERLIN("Berlin")
 }
