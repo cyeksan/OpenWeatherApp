@@ -3,11 +3,11 @@ package com.csappgenerator.weatherapp.data.repository
 import com.csappgenerator.weatherapp.common.City
 import com.csappgenerator.weatherapp.common.CityKeys
 import com.csappgenerator.weatherapp.data.local.WeatherDao
-import com.csappgenerator.weatherapp.data.local.entity.WeatherEntity
 import com.csappgenerator.weatherapp.data.remote.WeatherApi
 import com.csappgenerator.weatherapp.data.remote.dto.toWeather
 import com.csappgenerator.weatherapp.domain.model.Weather
 import com.csappgenerator.weatherapp.domain.repository.WeatherRepository
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.supervisorScope
 import timber.log.Timber
@@ -71,6 +71,9 @@ class WeatherRepositoryImpl @Inject constructor(
                 try {
                     deferredResult.await()
                 } catch (exception: Exception) {
+                    if (exception is CancellationException) {
+                        throw exception
+                    }
                     Timber.e(exception.message)
                     null
                 }
