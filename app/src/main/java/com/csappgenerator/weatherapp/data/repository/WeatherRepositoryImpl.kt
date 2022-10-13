@@ -20,7 +20,7 @@ class WeatherRepositoryImpl @Inject constructor(
     private val cities = City.getCities()
 
     override suspend fun getWeatherData(): List<Weather> {
-        val mutableWeatherList = mutableListOf<Weather>()
+        var deferredList = emptyList<Weather>()
         supervisorScope {
             val deferredGothenburg = async {
                 api.getWeatherData(cityName = cities[CityKeys.GOTHENBURG.name]!!).toWeather()
@@ -40,29 +40,24 @@ class WeatherRepositoryImpl @Inject constructor(
             val deferredBerlin = async {
                 api.getWeatherData(cityName = cities[CityKeys.BERLIN.name]!!).toWeather()
             }
-            val deferredList = listOf(
+
+            deferredList = listOf(
                 deferredGothenburg,
                 deferredStockholm,
                 deferredMountainView,
                 deferredLondon,
                 deferredNewYork,
                 deferredBerlin
-            )
-
-            deferredList.forEach { deferredResult ->
-                val result = try {
+            ).mapNotNull { deferredResult ->
+                try {
                     deferredResult.await()
-
                 } catch (exception: Exception) {
                     Timber.e(exception.message)
                     null
                 }
-                if (result != null) {
-                    mutableWeatherList.add(result)
-                }
             }
         }
-        return mutableWeatherList
+        return deferredList
     }
 
     override suspend fun getWeatherDataFromDb(): List<WeatherEntity> {
